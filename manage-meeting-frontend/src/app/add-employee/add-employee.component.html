@@ -1,0 +1,113 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">Add/Edit Employee</h5>
+      </div>
+      <div class="card-body">
+        <form name="form" [formGroup]="form">
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <label> Employee Id</label>
+                <input
+                  type="text"
+                  name="employeeId"
+                  formControlName="employeeId"
+                  class="form-control"
+                  placeholder="id">
+              </div>
+              <div class="alert alert-danger" *ngIf = "form.get('employeeId').touched && form.get('employeeId').invalid">
+                Id is required.
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  formControlName="name"
+                  class="form-control"
+                  placeholder="name">
+              </div>
+
+              <div class="alert alert-danger" *ngIf = "form.get('name').touched && form.get('name').invalid">
+                Name is required.
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <div>
+                  <label>Designation</label>
+                  <input
+                    type="text"
+                    name="designation"
+                    placeholder="designation"
+                    class="form-control"
+                    formControlName="designation">
+                </div>
+                <div class="alert alert-danger" *ngIf = "form.get('designation').touched && form.get('designation').invalid">
+                  Designation is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <div>
+                  <label>Department</label>
+                  <input
+                    type="text"
+                    name="department"
+                    placeholder="department"
+                    class="form-control"
+                    formControlName="department">
+                </div>
+                <div class="alert alert-danger" *ngIf = "form.get('department').touched && form.get('department').invalid">
+                  Department is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group">
+                <div>
+                  <label>E-mail</label>
+                  <input
+                    type="text"
+                    name="mail"
+                    placeholder="mail"
+                    class="form-control"
+                    formControlName="mail">
+                </div>
+                <div class="alert alert-danger" *ngIf = "form.get('mail').touched && form.get('mail').invalid">
+                  E-mail is invalid.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <button
+                [disabled]="form.invalid"
+                type="button"
+                class="btn sbtn"
+                (click)="createVenue(form.value)">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

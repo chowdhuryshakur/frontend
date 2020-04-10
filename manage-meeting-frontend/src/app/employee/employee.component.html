@@ -1,0 +1,46 @@
+<script src="../service/app.service.ts"></script>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"> Employees</h4>
+        </div>
+        <div class="card-body">
+          <p>
+            <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+          </p>
+          <div class="table-responsive" >
+            <data-table [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)" >
+              <data-table-column [property]="'employeeId'" [header]="'Employee Id'" [sortable]="true" [resizable]="true">
+
+              </data-table-column>
+              <data-table-column [property]="'name'" [header]="'Name'" [sortable]="true" [resizable]="true">
+
+              </data-table-column>
+              <data-table-column [property]="'designation'" [header]="'Designation'" [sortable]="true" [resizable]="true">
+
+              </data-table-column>
+              <data-table-column [property]="'department'" [header]="'Department'" [sortable]="true" [resizable]="true">
+
+              </data-table-column>
+              <data-table-column [property]="'mail'" [header]="'Mail'" [sortable]="true" [resizable]="true">
+
+              </data-table-column>
+              <data-table-column>
+                <ng-template #dataTableCell let-item ="item">
+                  <a [routerLink]="['/employee/', item.employeeId]"><mat-icon>edit</mat-icon></a>
+                  <a (click)="deleteEmployee(item)" class="a"><mat-icon>delete_outline</mat-icon></a>
+                </ng-template>
+              </data-table-column>
+            </data-table>
+          </div>
+          <button type="button" class="btn btn-secondary btn-lg btn-block" routerLink="/employee">Add an New Employee</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,66 @@
+<script src="../service/app.service.ts"></script>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title"> Venue List</h4>
+        </div>
+        <div class="card-body">
+          <p>
+            <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+          </p>
+          <div class="table-responsive" >
+            <data-table [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)" >
+              <data-table-column [property]="'venueId'" [header]="'Venue Id'" [sortable]="true" [resizable]="true">
+
+              </data-table-column>
+              <data-table-column [property]="'capacity'" [header]="'Capacity'" [sortable]="true" [resizable]="true">
+
+              </data-table-column>
+              <data-table-column [header]="'Facilities'" [resizable]="true">
+                <ng-template #dataTableCell let-item ="item">
+                  <li *ngFor="let f of item.facilityList">{{f}}</li>
+                 </ng-template>
+              </data-table-column>
+              <data-table-column>
+                <ng-template #dataTableCell let-item ="item">
+                  <a [routerLink]="['/venue/', item.venueId]"><mat-icon>edit</mat-icon></a>
+                  <a (click)="deleteVenue(item)" class="a"><mat-icon>delete_outline</mat-icon></a>
+                </ng-template>
+              </data-table-column>
+            </data-table>
+
+
+            <!--<table class="table" *ngIf="venueList">
+              <thead class=" text-primary">
+
+                  <th>Venue ID</th>
+                  <th>Capacity</th>
+                  <th >Facilities</th>
+                  <th class="text-right"></th>
+
+              </thead>
+              <tbody>
+                <tr *ngFor="let venue of filterList">
+                  <td>{{venue.venueId}}</td>
+                  <td>{{venue.capacity}}</td>
+                  <td>
+                    <ul>
+                      <li *ngFor="let f of venue.facilityList">{{f}}</li>
+                    </ul>
+                  </td>
+                  <td> <a [routerLink]="['/venue/', venue.venueId]">Edit</a> </td>
+                </tr>
+              </tbody>
+            </table>-->
+          </div>
+          <button type="button" class="btn btn-secondary btn-lg btn-block" routerLink="/venue">Add new venue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

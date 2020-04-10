@@ -1,0 +1,60 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+      <form class="login100-form validate-form" >
+        <span class="login100-form-title p-b-33">
+          <h6> Manage Meeting </h6>
+					</span>
+        <div class="alert alert-warning" *ngIf="invalidLogin">Credentials are incorrect!!!</div>
+					<span class="login100-form-title p-b-33">
+						Account Login
+					</span>
+
+        <div class="alert alert-danger " *ngIf = "name.touched && name.invalid" >username is required.</div>
+
+        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz" >
+          <input class="input100" type="text" name="username" #name = "ngModel" placeholder="Username" [(ngModel)]="username" required>
+          <span class="focus-input100-1"></span>
+          <span class="focus-input100-2"></span>
+        </div>
+
+        <div class="alert alert-danger " *ngIf = "pass.touched && pass.invalid" >
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          Password is required.</div>
+
+        <div class="wrap-input100 rs1 validate-input" data-validate="Password is required" >
+          <input class="input100" type="password"  name="pass"  #pass = "ngModel" placeholder="Password" [(ngModel)]="password"  required/>
+          <span class="focus-input100-1"></span>
+          <span class="focus-input100-2"></span>
+        </div>
+
+        <div class="container-login100-form-btn m-t-20">
+          <button class="login100-form-btn" (click)= checkLogin() >
+            Sign in
+          </button>
+        </div>
+
+        <div class="text-center p-t-45 p-b-4">
+						<span class="txt1">
+							Forgot
+						</span>
+
+          <a href="#" class="txt2 hov1">
+            Username / Password?
+          </a>
+        </div>
+
+        <div class="text-center">
+						<span class="txt1">
+							This web app's is in
+						</span>
+
+          <p  class="txt2 hov1">
+            ALFA TESTING version
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

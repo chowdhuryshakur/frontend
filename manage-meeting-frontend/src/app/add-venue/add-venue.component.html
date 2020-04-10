@@ -1,0 +1,94 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Add/Edit Venue</h5>
+        </div>
+        <div class="card-body">
+          <form name="form" [formGroup]="form">
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label> Venue Id</label>
+                  <input
+                    type="text"
+                    name="venueId"
+                    formControlName="venueId"
+                    class="form-control"
+                    placeholder="id">
+                </div>
+                <div class="alert alert-danger" *ngIf = "form.get('venueId').touched && form.get('venueId').invalid">
+                      Id is required.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label>Capacity</label>
+                  <input
+                    type="text"
+                    name="capacity"
+                    formControlName="capacity"
+                    class="form-control"
+                    placeholder="capacity">
+                </div>
+
+                <div class="alert alert-danger" *ngIf = "form.get('capacity').touched && form.get('capacity').invalid">
+                  <div *ngIf="form.get('capacity').errors.required">capacity is required.</div>
+                  <div *ngIf="form.get('capacity').errors?.number">capacity is a <b>number</b>.</div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <div>
+                    <label>Facilities</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="FacilityList"
+                      class="form-control"
+                      formControlName="facilities">
+
+                    <button (click)="addFacility()" class="btn ssbtn">Add</button>
+                  </div>
+                  <div class="alert alert-danger" *ngIf = "facilityList.length == 0 && form.get('facilities').touched">
+                    This field is required.
+                  </div>
+                  <table class="table table-hover" *ngIf="facilityList.length > 0">
+                    <thead>
+                    <tr>
+                      <th scope="col" >Added Facility</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let f of facilityList; let i = index;">
+                      <td scope="row">{{f}}</td>
+                      <td><a  (click)="removeFacilityList(i)" class="a"><mat-icon>delete_outline</mat-icon></a></td>
+                    </tr>
+                   </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <button
+                  [disabled]="form.get('capacity').invalid || form.get('venueId').invalid || facilityList.length < 1"
+                  type="button"
+                  class="btn sbtn"
+                  (click)="createVenue(form.value)">Save</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
