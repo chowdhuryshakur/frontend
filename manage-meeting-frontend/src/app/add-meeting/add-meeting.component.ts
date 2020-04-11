@@ -25,6 +25,7 @@ export class AddMeetingComponent implements OnInit {
 
   venues: Venue[] = [];
   employees: Employee[] = [];
+  selectedEmployee: Employee;
 
   constructor(private meetingService: MeetingService,
               private toastr: ToastrService,
@@ -53,15 +54,12 @@ export class AddMeetingComponent implements OnInit {
   }
 
   createForm(): FormGroup {
-    if (!this.meeting.employeeList) {
-      this.person.address = new Address();
-    }
     if (this.meeting.venue == null) {
       this.meeting.venue = new Venue();
     }
     return this.form = this.formBuilder.group({
       meetingId: [this.meeting.meetingId, Validators.required],
-      venue: [this.meeting.venue.venueId, [Validators.required ]],
+      venue: [ this.meeting.venue.venueId, [Validators.required ]],
       /*venue: this.formBuilder.group({
         venueId: [this.meeting.venue.venueId, [Validators.required]]
       }),*/
@@ -76,20 +74,30 @@ export class AddMeetingComponent implements OnInit {
   createMeeting(meeting: Meeting): void {
     if (this.meetingId)
     {
+      meeting.venue = this.venues.find(venue =>
+        venue.venueId.toLowerCase().includes(this.form.get('venue').value.toLowerCase()));
+      meeting.employeeList = this.employeeList;
       this.meetingService.updateMeeting(this.meetingId, meeting).subscribe(data => {
+        this.employeeList = [];
         this.showUpdateNotification('top', 'right');
         this.route.navigate(['/meetings']); });
     console.log(meeting);}
     else {
+      meeting.venue = this.venues.find(venue =>
+        venue.venueId.toLowerCase().includes(this.form.get('venue').value.toLowerCase()));
+      meeting.employeeList = this.employeeList;
       this.meetingService.createMeeting(meeting)
         .subscribe(data => {
+          this.employeeList = [];
           this.form.reset();
           this.showSaveNotification('top', 'right');
           this.route.navigate(['/meetings']);
         }); }
   }
   addEmployee(): any {
-    this.employeeList.push(this.form.get('employees').value);
+   this.selectedEmployee = this.employees.find(emp =>
+          emp.name.toLowerCase().includes(this.form.get('employees').value.toLowerCase()));
+    this.employeeList.push(this.selectedEmployee);
     this.form.get('employees').reset();
   }
   public removeEmployeeList(index: number): any {

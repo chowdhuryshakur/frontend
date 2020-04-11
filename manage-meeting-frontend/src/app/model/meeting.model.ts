@@ -7,7 +7,7 @@ export class Meeting {
   public subject: string;
   public dateAndTime: Date;
   public duration: number;
-  public employeeList: Employee;
+  public employeeList: Employee[];
 
   constructor(meeting?) {
     meeting = meeting || {};
