@@ -27,23 +27,6 @@
           </div>
           <div class="row">
             <div class="col-md-5 pr-1">
-              <div class="form-group" >
-                <label>Venue Name</label>
-                <select  class="form-control" [value]="meeting.venue.venueId" name="venue" formControlName="venue">
-                  <option value="">Venue Name</option>
-                  <option *ngFor="let v of venues" >
-                    {{v.venueId}}
-                  </option>
-                </select>
-              </div>
-              <div class="alert alert-danger" *ngIf = "form.get('venue').touched && form.get('venue').invalid">
-                Venue is required.
-              </div>
-
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 pr-1">
               <div class="form-group">
                 <div>
                   <label>Subject</label>
@@ -90,6 +73,22 @@
                 <div class="alert alert-danger" *ngIf = "form.get('duration').touched && form.get('duration').invalid">
                   Duration is invalid.
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5 pr-1">
+              <div class="form-group" >
+                <label>Venue Name</label>
+                <select  class="form-control" [value]="meeting.venue.venueId" name="venue" formControlName="venue">
+                  <option value="">Venue Name</option>
+                  <option *ngFor="let v of venues" >
+                    {{v.venueId}}
+                  </option>
+                </select>
+              </div>
+              <div class="alert alert-danger" *ngIf = "form.get('venue').touched && form.get('venue').invalid">
+                Venue is required.
               </div>
             </div>
           </div>
