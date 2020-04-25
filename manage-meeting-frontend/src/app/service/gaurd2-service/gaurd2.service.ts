@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AppService} from '../app.service';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGaurdService implements CanActivate {
+export class Gaurd2Service implements CanActivate {
 
   constructor(private router: Router,
               private appservice: AppService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.appservice.isUserLoggedIn())
-      return true;
+    if (this.appservice.isAdminLoggedIn())
+         return true;
 
-    this.router.navigate(['login']);
+    this.router.navigate(['user/invited-meeting']);
     return false;
   }
-
 }

@@ -6,6 +6,7 @@ import {Subscribable, Subscription} from 'rxjs';
 import {DataTableResource} from 'angular7-data-table';
 import {Router} from '@angular/router';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {AppService} from '../service/app.service';
 
 
 @Component({
@@ -21,10 +22,10 @@ export class VenueListComponent implements OnInit, OnDestroy {
   tableResource: DataTableResource<Venue>;
   items: Venue[] = [];
   itemCount: number;
-
   constructor(private venueService: VenueService,
               private toastr: ToastrService,
-              private route: Router) {
+              private route: Router,
+              private  appService: AppService ) {
     this.subscription = this.venueService.getAll()
       .subscribe(venue => {
         this.filterList = this.venueList = venue;
@@ -39,7 +40,6 @@ export class VenueListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,44 @@
+<div class="panel-header">
+  <div class="header text-center">
+    <h2 class="title">Invited Meetings</h2>
+    <p class="category">Please checkout the <b>Meetings.</b></p>
+  </div>
+</div>
+<div class="main-content">
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <p>
+              <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+            </p>
+            <div class="table-responsive" >
+              <data-table [items]="items" [itemCount]="itemCount" (reload)="reloadItems($event)" >
+                <data-table-column [property]="'meetingId'" [header]="'ID'" [sortable]="true" [resizable]="true">
+
+                </data-table-column>
+                <data-table-column [property]="'venue'" [header]="'Venue'" [sortable]="true" [resizable]="true">
+                  <ng-template #dataTableCell let-item ="item">
+                    {{item.venue.venueId}}
+                  </ng-template>
+                </data-table-column>
+                <data-table-column [property]="'subject'" [header]="'Subject'" [sortable]="true" [resizable]="true">
+
+                </data-table-column>
+                <data-table-column [property]="'dateAndTime:'" [header]="'Date and Time'" [sortable]="true" [resizable]="true">
+                  <ng-template #dataTableCell let-item ="item">
+                    {{ item.dateAndTime | date:'dd/MM/yyyy @ h:mma'}}
+                  </ng-template>
+                </data-table-column>
+                <data-table-column [property]="'duration'" [header]="'Duration'" [sortable]="true" [resizable]="true">
+
+                </data-table-column>
+              </data-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomFormsModule} from 'ng2-validation';
 import {DataTableModule} from 'angular7-data-table';
 import {MatIconModule} from '@angular/material';
+import {Gaurd2Service} from './service/gaurd2-service/gaurd2.service';
+
 
 
 
@@ -33,26 +35,25 @@ import {MatIconModule} from '@angular/material';
     NgbModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
-      /*{ path: '', component: AdminLayoutComponent },*/
       {path: 'logout', component: LogoutComponent, canActivate: [AuthGaurdService]},
       {path: 'login', component: LoginComponent},
-      {path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [AuthGaurdService]},
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full', canActivate: [Gaurd2Service, AuthGaurdService]},
       {
         path: '', component: AdminLayoutComponent,
         children: [{
           path: '',
           loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
-        }], canActivate: [AuthGaurdService]
+        }]/*, canActivate: [AuthGaurdService/!*, Gaurd2Service*!/]*/
       },
-      {path: '**', redirectTo: 'dashboard', canActivate: [AuthGaurdService]}
-    ]),
+      {path: '**', redirectTo: 'dashboard', canActivate: [AuthGaurdService, Gaurd2Service]},
+      ]),
     MatIconModule,
   ],
   declarations: [
     AppComponent,
     LoginComponent,
     AdminLayoutComponent,
-    LogoutComponent
+    LogoutComponent,
   ],
   providers: [VenueService],
   bootstrap: [AppComponent]

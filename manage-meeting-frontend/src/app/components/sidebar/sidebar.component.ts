@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AddVenueComponent} from '../../add-venue/add-venue.component';
+import {AppService} from '../../service/app.service';
+import {delay} from 'rxjs/operators';
 
 declare interface RouteInfo {
     path: string;
@@ -12,13 +14,17 @@ export const ROUTES: RouteInfo[] = [
     { path: '/meetings', title: 'Meetings',  icon:'business_briefcase-24', class: '' },
     { path: '/venue-list', title: 'Venue',  icon:'location_pin', class: '' },
     { path: '/employees', title: 'Employees',  icon:'users_single-02', class: '' },
-    { path: '/notifications', title: 'Invited Meeting',  icon:'ui-1_email-85', class: '' },
-    { path: '/user-profile', title: 'Objection',  icon:'ui-2_chat-round', class: '' }
+    { path: '/invited-meeting', title: 'Invited Meeting',  icon:'ui-1_email-85', class: '' },
+    { path: '/objection', title: 'Objection',  icon:'ui-2_chat-round', class: '' }
 
    /*
     { path: '/typography', title: 'Typography',  icon:'text_caps-small', class: '' },
     { path: '/upgrade', title: 'Upgrade to PRO',  icon:'objects_spaceship', class: 'active active-pro' }
 */
+];
+export const UserROUTES: RouteInfo[] = [
+  { path: '/user/invited-meeting', title: 'Invited Meeting',  icon:'ui-1_email-85', class: '' },
+  { path: '/user/objection', title: 'Objection',  icon:'ui-2_chat-round', class: '' }
 ];
 export const SecondROUTES: RouteInfo[] = [
   { path: '/venue', title: 'Add-Venue',  icon: '' , class: '' },
@@ -35,11 +41,19 @@ export const SecondROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
+  role: string = 'USER';
+  constructor(private appService: AppService) { }
 
-  constructor() { }
-
+  async delayWithRoleCheck(ms: number) {
+    await new Promise(resolve => setTimeout(() => resolve(), ms))
+      .then(() =>
+      { if ( this.role === 'ADMIN') {
+        this.menuItems = ROUTES.filter(menuItem => menuItem);
+      } else { this.menuItems = UserROUTES.filter(menuItem => menuItem); }});
+  }
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.appService.getRole().subscribe(r => this.role = r );
+    this.delayWithRoleCheck(2000);
   }
   isMobileMenu() {
       if ( window.innerWidth > 991) {

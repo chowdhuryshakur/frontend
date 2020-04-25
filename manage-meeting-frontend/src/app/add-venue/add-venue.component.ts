@@ -36,7 +36,6 @@ export class AddVenueComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-
   }
 
   /*ngAfterViewInit(): void {

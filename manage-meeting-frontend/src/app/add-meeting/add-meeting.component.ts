@@ -60,9 +60,6 @@ export class AddMeetingComponent implements OnInit {
     return this.form = this.formBuilder.group({
       meetingId: [this.meeting.meetingId, Validators.required],
       venue: [ this.meeting.venue.venueId, [Validators.required ]],
-      /*venue: this.formBuilder.group({
-        venueId: [this.meeting.venue.venueId, [Validators.required]]
-      }),*/
       subject: [this.meeting.subject, Validators.required],
       dateAndTime: [this.meeting.dateAndTime, Validators.required],
       duration: [this.meeting.duration, [Validators.required, CustomValidators.number]],

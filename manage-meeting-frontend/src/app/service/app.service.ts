@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {ROUTES, UserROUTES} from '../components/sidebar/sidebar.component';
 
 export class User {
   constructor(
@@ -10,7 +11,7 @@ export class User {
 
 @Injectable({providedIn : 'root'})
 export class AppService {
-
+ private rrole = '';
   constructor(private http: HttpClient) {
   }
 
@@ -20,21 +21,32 @@ export class AppService {
       map(
         userData => {
           sessionStorage.setItem('username', username);
+          sessionStorage.setItem('password', password);
           return userData;
         }));
     }
+  getRole(): any {
+    let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');
+    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
+    return this.http.get('https://shakurbackend.herokuapp.com/api/v1/employees/role', {headers , responseType: 'text'})
+  }
   getUser() {
     const user = sessionStorage.getItem('username');
    return user;
   }
   isUserLoggedIn() {
     const user = sessionStorage.getItem('username');
-    // console.log(!(user === null))
     return !(user === null);
+  }
+  isAdminLoggedIn() {
+    this.getRole().subscribe(r =>  this.rrole = r);
+    return (this.rrole === 'ADMIN');
   }
 
   logOut() {
     sessionStorage.removeItem('username');
+    sessionStorage.removeItem('password');
   }
 
 }

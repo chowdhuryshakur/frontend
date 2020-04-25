@@ -1,0 +1,92 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Entry your objection:</h5>
+        </div>
+        <div class="card-body">
+          <form name="form" [formGroup]="form">
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label>Meeting ID</label>
+                  <select  class="form-control" [value]="obj.meeting.meetingId" name="meetingId" formControlName="meetingId">
+                    <option value="">Meeting</option>
+                    <option *ngFor="let m of meetings" >
+                      {{m.meetingId}}
+                    </option>
+                  </select>
+                </div>
+                <div class="alert alert-danger" *ngIf = "form.get('meetingId').touched && form.get('meetingId').invalid">
+                  Meeting Id is required.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label>Objection</label>
+                  <textarea
+                    name="objection"
+                    formControlName="objection"
+                    class="form-control"
+                    placeholder="Here can be your objection"></textarea>
+                </div>
+                <div class="alert alert-danger" *ngIf = "form.get('objection').touched && form.get('objection').invalid">
+                  This field  is required.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <button
+                  [disabled]="form.get('meetingId').invalid || form.get('objection').invalid"
+                  type="button"
+                  class="btn sbtn"
+                  (click)="createObjection(form.value)">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/bg5.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="#">
+              <img class="avatar border-gray" src="https://lh3.googleusercontent.com/-ofoVWxT9aog/XBQXVAJ2vAI/AAAAAAAABHM/XF8iEcrR9nwphT1VxfAp1jEs6x9EtDIVwCEwYBhgL/w136-h140-p/IMG_20181215_021737.jpg" alt="photo">
+              <h5 class="title">{{getUser()}}</h5>
+            </a>
+            <p class="description">
+              Designation
+            </p>
+          </div>
+          <p class="description text-center">
+            "Employee details
+            <br> ID:
+            <br> Department:"
+          </p>
+        </div>
+        <hr>
+        <div class="button-container">
+          <button href="https://www.facebook.com/alshakur.karimchowdhury" class="btn btn-neutral btn-icon btn-round btn-lg">
+            <i class="fab fa-facebook-f"></i>
+          </button>
+          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+            <i class="fab fa-twitter"></i>
+          </button>
+          <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+            <i class="fab fa-google-plus-g"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
