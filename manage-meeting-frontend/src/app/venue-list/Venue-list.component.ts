@@ -22,6 +22,7 @@ export class VenueListComponent implements OnInit, OnDestroy {
   tableResource: DataTableResource<Venue>;
   items: Venue[] = [];
   itemCount: number;
+  showSpinner = true;
   constructor(private venueService: VenueService,
               private toastr: ToastrService,
               private route: Router,
@@ -30,6 +31,7 @@ export class VenueListComponent implements OnInit, OnDestroy {
       .subscribe(venue => {
         this.filterList = this.venueList = venue;
         this.initializeTable(venue);
+        this.showSpinner = false;
       });
   }
 

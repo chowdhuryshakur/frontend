@@ -9,14 +9,14 @@ import {Objection} from '../../model/objection.model';
 })
 export class ObjectionService {
   private _objection_url = 'https://shakurbackend.herokuapp.com/api/v1/objections';
-
+  /*private _objection_url = 'localhost:8080/api/v1/objections';*/
   constructor(private http: HttpClient) { }
 
   public deleteObjection(objection) {
     let username='shakur'
     let password='1234'
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.delete<Objection>(this._objection_url + '/' + objection.objectId, {headers});
+    return this.http.delete<Objection>(this._objection_url + '/' + objection.id, {headers} );
   }
   public createObjection(objection) {
     let username= 'shakur'
@@ -25,13 +25,13 @@ export class ObjectionService {
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     return this.http.post<Objection>(this._objection_url, objection, {headers});
   }
-  public updateObjection(objectionId: string, objection) {
+ /* public updateObjection(objectionId: string, objection) {
     let username= 'shakur'
     let password= '1234'
 
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     return this.http.put<Objection>(this._objection_url+ '/' + objectionId, objection, {headers});
-  }
+  }*/
   getAll(): Observable<any> {
     let username = 'shakur';
     let password = '1234';
@@ -39,10 +39,10 @@ export class ObjectionService {
     return this.http.get(this._objection_url, { headers });
   }
 
-  getById(objectionId: string): Observable<any> {
+  getById(objection): Observable<any> {
     let username = 'shakur';
     let password = '1234';
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.get<Objection>(this._objection_url + '/' + objectionId, {headers});
+    return this.http.get<Objection>(this._objection_url + '/' + objection.id, {headers});
   }
 }

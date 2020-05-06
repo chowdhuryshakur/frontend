@@ -17,7 +17,7 @@ export class AddEmployeeComponent implements OnInit {
   employeeId: string;
 
   employee: Employee = new Employee();
-
+  showSpinner = true;
   constructor(private employeeService: EmployeeService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -28,6 +28,7 @@ export class AddEmployeeComponent implements OnInit {
       this.employeeService.getById(this.employeeId).subscribe((e) => {
         this.employee = e;
         this.form = this.createForm();
+        this.showSpinner = false;
       });
     }
   }

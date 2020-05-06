@@ -21,7 +21,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   tableResource: DataTableResource<Employee>;
   items: Employee[] = [];
   itemCount: number;
-
+  showSpinner = true;
   constructor(private employeeService: EmployeeService,
               private toastr: ToastrService,
               private route: Router) {
@@ -29,6 +29,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       .subscribe(employee => {
         this.filterList = this.employeeList = employee;
         this.initializeTable(employee);
+        this.showSpinner = false;
       });
   }
   private initializeTable(employees: Employee[]) {

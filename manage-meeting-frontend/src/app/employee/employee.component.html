@@ -2,6 +2,14 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
+  <div class="overlay" *ngIf="showSpinner">
+    <div class="center">
+      <mat-progress-spinner diameter=130
+                            mode="indeterminate"
+                            color="primary">
+      </mat-progress-spinner>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-12">
       <div class="card">

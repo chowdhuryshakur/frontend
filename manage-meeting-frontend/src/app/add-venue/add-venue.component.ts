@@ -18,7 +18,7 @@ export class AddVenueComponent implements OnInit {
 
   venue: Venue = new Venue();
   facilityList: string[] = [];
-
+  showSpinner = true;
   constructor(private venueService: VenueService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -30,6 +30,7 @@ export class AddVenueComponent implements OnInit {
         this.venue = v;
         this.facilityList = this.venue.facilityList;
         this.form = this.createForm();
+        this.showSpinner = false;
       });
     }
   }

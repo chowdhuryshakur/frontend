@@ -1,4 +1,12 @@
 <div class="limiter">
+  <div class="overlay" *ngIf="showSpinner">
+    <div class="center">
+      <mat-progress-spinner diameter=130
+                            mode="indeterminate"
+                            color="primary">
+      </mat-progress-spinner>
+    </div>
+  </div>
   <div class="container-login100">
     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
       <form class="login100-form validate-form" >

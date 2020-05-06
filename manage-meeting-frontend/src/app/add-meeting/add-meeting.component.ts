@@ -26,7 +26,7 @@ export class AddMeetingComponent implements OnInit {
   venues: Venue[] = [];
   employees: Employee[] = [];
   selectedEmployee: Employee;
-
+  showSpinner = true;
   constructor(private meetingService: MeetingService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -40,6 +40,7 @@ export class AddMeetingComponent implements OnInit {
         this.meeting = m;
         this.employeeList = m.employeeList;
         this.form = this.createForm();
+        this.showSpinner = false;
       });
     };
     this.venueService.getAll().subscribe(v => {

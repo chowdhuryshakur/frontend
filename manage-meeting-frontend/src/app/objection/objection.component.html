@@ -11,7 +11,7 @@
           <form name="form" [formGroup]="form">
             <div class="row">
               <div class="col-md-5 pr-1">
-                <div class="form-group">
+                <div class="form-group" formGroupName="meeting">
                   <label>Meeting ID</label>
                   <select  class="form-control" [value]="obj.meeting.meetingId" name="meetingId" formControlName="meetingId">
                     <option value="">Meeting</option>
@@ -20,7 +20,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="alert alert-danger" *ngIf = "form.get('meetingId').touched && form.get('meetingId').invalid">
+                <div class="alert alert-danger" *ngIf = "form.get('meeting.meetingId').touched && form.get('meeting.meetingId').invalid">
                   Meeting Id is required.
                 </div>
               </div>
@@ -43,7 +43,7 @@
             <div class="row">
               <div class="col-md-5 pr-1">
                 <button
-                  [disabled]="form.get('meetingId').invalid || form.get('objection').invalid"
+                  [disabled]="form.invalid"
                   type="button"
                   class="btn sbtn"
                   (click)="createObjection(form.value)">Submit</button>

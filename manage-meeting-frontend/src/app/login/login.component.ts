@@ -15,8 +15,7 @@ export class LoginComponent implements OnInit {
   username = '';
   password = '';
   invalidLogin = false;
-
-
+  showSpinner = false;
   constructor(private router: Router,
               private appservice: AppService) {
   }
@@ -27,11 +26,12 @@ export class LoginComponent implements OnInit {
   checkLogin() {
     (this.appservice.authenticate(this.username, this.password).subscribe(
         data => {
-          this.router.navigate([''])
-          this.invalidLogin = false
+          this.router.navigate(['']);
+          this.invalidLogin = false;
         },
         error => {
-          this.invalidLogin = true}));
+          this.invalidLogin = true;}));
+    this.showSpinner = true;
   }
 
 

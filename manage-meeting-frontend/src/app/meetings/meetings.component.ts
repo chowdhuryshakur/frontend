@@ -20,7 +20,7 @@ export class MeetingsComponent implements OnInit, OnDestroy {
   tableResource: DataTableResource<Meeting>;
   items: Meeting[] = [];
   itemCount: number;
-
+  showSpinner = true;
   constructor(private meetingService: MeetingService,
               private toastr: ToastrService,
               private route: Router) {
@@ -28,6 +28,7 @@ export class MeetingsComponent implements OnInit, OnDestroy {
     .subscribe(meeting => {
       this.filterList = this.meetingList = meeting;
       this.initializeTable(meeting);
+      this.showSpinner = false;
     });
   }
   private initializeTable(meetings: Meeting[]) {

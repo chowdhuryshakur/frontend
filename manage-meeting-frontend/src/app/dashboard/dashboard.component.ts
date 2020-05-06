@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import * as Chartist from 'chartist';
 import {AppService} from '../service/app.service';
+import {Objection} from '../model/objection.model';
+import {ObjectionService} from '../service/objection-service/objection-service.service';
+import {Venue} from '../model/venue.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,6 +12,10 @@ import {AppService} from '../service/app.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  objectionList: Objection[] = [];
+  @Input() objection: Objection;
+  showSpinner = true;
+
   public lineBigDashboardChartType;
   public gradientStroke;
   public chartColor;
@@ -58,7 +66,13 @@ export class DashboardComponent implements OnInit {
       return "rgb(" + r + ", " + g + ", " + b + ")";
     }
   }
-  constructor(private appservice: AppService) { }
+
+  constructor(private appservice: AppService,
+              private route: Router,
+              private objectionService: ObjectionService ) {
+    this.objectionService.getAll().subscribe(obj => {this.objectionList = obj;
+    this.showSpinner = false; });
+  }
 
   ngOnInit() {
     this.chartColor = "#FFFFFF";
@@ -407,4 +421,17 @@ export class DashboardComponent implements OnInit {
 
     this.lineChartGradientsNumbersType = 'bar';
   }
+
+  deleteObjection(objection: Objection) {
+    if (!confirm('Are you sure?')) {
+      return; }
+
+    this.objectionService.deleteObjection(objection)
+      .subscribe(response =>
+        this.redirectTo('dashboard'));
+  }
+  redirectTo(uri: string){
+    this.route.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.route.navigate([uri]));
+    }
 }

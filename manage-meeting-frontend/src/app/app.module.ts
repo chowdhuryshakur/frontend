@@ -17,7 +17,7 @@ import {AuthGaurdService} from './service/authgaurd-service/authguard.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomFormsModule} from 'ng2-validation';
 import {DataTableModule} from 'angular7-data-table';
-import {MatIconModule} from '@angular/material';
+import {MatIconModule, MatProgressSpinnerModule} from '@angular/material';
 import {Gaurd2Service} from './service/gaurd2-service/gaurd2.service';
 
 
@@ -46,8 +46,9 @@ import {Gaurd2Service} from './service/gaurd2-service/gaurd2.service';
         }]/*, canActivate: [AuthGaurdService/!*, Gaurd2Service*!/]*/
       },
       {path: '**', redirectTo: 'dashboard', canActivate: [AuthGaurdService, Gaurd2Service]},
-      ]),
+    ]),
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     AppComponent,

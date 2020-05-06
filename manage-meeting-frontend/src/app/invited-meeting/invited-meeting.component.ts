@@ -22,6 +22,7 @@ export class InvitedMeetingComponent implements OnInit, OnDestroy {
   items: Meeting[] = [];
   itemCount: number;
   tempMeeting: Meeting  = new Meeting();
+  showSpinner = true;
   constructor(private meetingService: MeetingService) {
     this.subscription = this.meetingService.getAll()
     .subscribe(meetings => {
@@ -32,6 +33,7 @@ export class InvitedMeetingComponent implements OnInit, OnDestroy {
           this.filterList.push(this.tempMeeting);
           this.meetingList.push(this.tempMeeting);
           this.initializeTable(this.meetingList); } } }
+      this.showSpinner = false;
     });
     }
 
