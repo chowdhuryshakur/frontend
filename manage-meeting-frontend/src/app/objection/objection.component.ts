@@ -20,7 +20,7 @@ export class ObjectionComponent implements OnInit {
   meetings: Meeting[] = [];
   employees: Employee[] = [];
   tempMeeting: Meeting = new Meeting();
-
+  showSpinner = false;
   constructor(private appService: AppService,
               private employeeService: EmployeeService,
               private objectionService: ObjectionService,
@@ -62,6 +62,7 @@ export class ObjectionComponent implements OnInit {
   }
 
   createObjection(obj: Objection): void {
+    this.showSpinner = true;
     obj.employee = this.employees.find(employee =>
       employee.name.toLowerCase().includes(sessionStorage.getItem('username').toLowerCase()));
     obj.meeting = this.meetings.find(meeting =>
@@ -70,6 +71,7 @@ export class ObjectionComponent implements OnInit {
       .subscribe(data => {
         this.form.reset();
         this.showSaveNotification('top', 'right');
+        this.showSpinner = false;
       });
   }
 

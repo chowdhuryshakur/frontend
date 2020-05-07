@@ -18,6 +18,7 @@ export class AddEmployeeComponent implements OnInit {
 
   employee: Employee = new Employee();
   showSpinner = true;
+  showSpinner1 = false;
   constructor(private employeeService: EmployeeService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -29,8 +30,7 @@ export class AddEmployeeComponent implements OnInit {
         this.employee = e;
         this.form = this.createForm();
         this.showSpinner = false;
-      });
-    }
+      });} else { this.showSpinner = false; }
   }
 
   ngOnInit() {
@@ -48,18 +48,18 @@ export class AddEmployeeComponent implements OnInit {
 
 
   createVenue(employee: Employee): void {
+    this.showSpinner1 = true;
     if (this.employeeId)
     {
       this.employeeService.updateEmployee(this.employeeId, employee).subscribe(data => {
         this.showUpdateNotification('top', 'right');
-        this.route.navigate(['/employees']); }); }
+        this.route.navigate(['/employees']);}); }
     else {
       this.employeeService.createEmployee(employee)
         .subscribe(data => {
           this.form.reset();
           this.showSaveNotification('top', 'right');
-          this.route.navigate(['/employees']);
-        }); }
+          this.route.navigate(['/employees']);}); }
   }
 
   showSaveNotification(from, align) {

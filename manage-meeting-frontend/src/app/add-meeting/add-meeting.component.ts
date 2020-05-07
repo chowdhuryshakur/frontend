@@ -27,6 +27,7 @@ export class AddMeetingComponent implements OnInit {
   employees: Employee[] = [];
   selectedEmployee: Employee;
   showSpinner = true;
+  showSpinner1 = false;
   constructor(private meetingService: MeetingService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -42,7 +43,7 @@ export class AddMeetingComponent implements OnInit {
         this.form = this.createForm();
         this.showSpinner = false;
       });
-    };
+    } else { this.showSpinner = false; }
     this.venueService.getAll().subscribe(v => {
       this.venues = v;
     });
@@ -70,17 +71,16 @@ export class AddMeetingComponent implements OnInit {
 
 
   createMeeting(meeting: Meeting): void {
-    if (this.meetingId)
-    {
+    this.showSpinner1 = true;
+    if (this.meetingId) {
       meeting.venue = this.venues.find(venue =>
         venue.venueId.toLowerCase().includes(this.form.get('venue').value.toLowerCase()));
       meeting.employeeList = this.employeeList;
       this.meetingService.updateMeeting(this.meetingId, meeting).subscribe(data => {
         this.employeeList = [];
         this.showUpdateNotification('top', 'right');
-        this.route.navigate(['/meetings']); });
-    console.log(meeting);}
-    else {
+        this.route.navigate(['/meetings']);});
+        } else {
       meeting.venue = this.venues.find(venue =>
         venue.venueId.toLowerCase().includes(this.form.get('venue').value.toLowerCase()));
       meeting.employeeList = this.employeeList;
@@ -89,8 +89,7 @@ export class AddMeetingComponent implements OnInit {
           this.employeeList = [];
           this.form.reset();
           this.showSaveNotification('top', 'right');
-          this.route.navigate(['/meetings']);
-        }); }
+          this.route.navigate(['/meetings']);}); }
   }
   addEmployee(): any {
    this.selectedEmployee = this.employees.find(emp =>

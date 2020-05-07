@@ -111,6 +111,11 @@
                 type="button"
                 class="btn sbtn"
                 (click)="createVenue(form.value)">Save</button>
+              <mat-progress-spinner *ngIf="showSpinner1"
+                                    diameter=30
+                                    mode="indeterminate"
+                                    color="primary">
+              </mat-progress-spinner>
             </div>
           </div>
         </form>

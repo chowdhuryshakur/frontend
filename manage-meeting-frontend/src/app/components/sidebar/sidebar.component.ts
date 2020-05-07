@@ -47,13 +47,13 @@ export class SidebarComponent implements OnInit {
   async delayWithRoleCheck(ms: number) {
     await new Promise(resolve => setTimeout(() => resolve(), ms))
       .then(() =>
-      { if ( this.role === 'ADMIN') {
+      { if ( sessionStorage.getItem('role') === 'ADMIN') {
         this.menuItems = ROUTES.filter(menuItem => menuItem);
       } else { this.menuItems = UserROUTES.filter(menuItem => menuItem); }});
   }
   ngOnInit() {
-    this.appService.getRole().subscribe(r => this.role = r );
-    this.delayWithRoleCheck(2000);
+    /*this.appService.getRole(sessionStorage.getItem('username'), sessionStorage.getItem('password')).subscribe(r => this.role = r );*/
+    this.delayWithRoleCheck(500);
   }
   isMobileMenu() {
       if ( window.innerWidth > 991) {

@@ -19,6 +19,7 @@ export class AddVenueComponent implements OnInit {
   venue: Venue = new Venue();
   facilityList: string[] = [];
   showSpinner = true;
+  showSpinner1 = false;
   constructor(private venueService: VenueService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
@@ -31,8 +32,7 @@ export class AddVenueComponent implements OnInit {
         this.facilityList = this.venue.facilityList;
         this.form = this.createForm();
         this.showSpinner = false;
-      });
-    }
+      });} else { this.showSpinner = false; }
   }
 
   ngOnInit() {
@@ -70,11 +70,12 @@ export class AddVenueComponent implements OnInit {
 
 
   createVenue(venue: Venue): void {
+    this.showSpinner1 = true;
     if (this.venueId)
     { venue.facilityList = this.facilityList;
       this.venueService.updateVenue(this.venueId, venue).subscribe(data => {
       this.showUpdateNotification('top', 'right');
-        this.route.navigate(['/venue-list']); }); }
+        this.route.navigate(['/venue-list']);}); }
    else {
     venue.facilityList = this.facilityList;
     this.venueService.createVenue(venue)

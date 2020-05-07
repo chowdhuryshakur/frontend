@@ -17,6 +17,7 @@ export class AppService {
 
   authenticate(username, password) {
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
+    this.getRole(username, password).subscribe(r =>  sessionStorage.setItem('role', r));
     return this.http.get<User>('https://shakurbackend.herokuapp.com/api/v1/employees/validateLogin', {headers}).pipe(
       map(
         userData => {
@@ -25,9 +26,9 @@ export class AppService {
           return userData;
         }));
     }
-  getRole(): any {
-    let username = sessionStorage.getItem('username');
-    let password = sessionStorage.getItem('password');
+  getRole(username, password): any {
+    /*let username = sessionStorage.getItem('username');
+    let password = sessionStorage.getItem('password');*/
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     return this.http.get('https://shakurbackend.herokuapp.com/api/v1/employees/role', {headers , responseType: 'text'})
   }
@@ -40,13 +41,14 @@ export class AppService {
     return !(user === null);
   }
   isAdminLoggedIn() {
-    this.getRole().subscribe(r =>  this.rrole = r);
-    return (this.rrole === 'ADMIN');
+    /*this.getRole().subscribe(r =>  this.rrole = r);*/
+    return (sessionStorage.getItem('role') === 'ADMIN');
   }
 
   logOut() {
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('password');
+    sessionStorage.removeItem('role');
   }
 
 }

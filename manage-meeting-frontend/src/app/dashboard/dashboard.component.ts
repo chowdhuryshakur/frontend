@@ -5,6 +5,7 @@ import {Objection} from '../model/objection.model';
 import {ObjectionService} from '../service/objection-service/objection-service.service';
 import {Venue} from '../model/venue.model';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -69,7 +70,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private appservice: AppService,
               private route: Router,
-              private objectionService: ObjectionService ) {
+              private objectionService: ObjectionService) {
     this.objectionService.getAll().subscribe(obj => {this.objectionList = obj;
     this.showSpinner = false; });
   }
@@ -423,15 +424,13 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteObjection(objection: Objection) {
+    this.showSpinner = true;
     if (!confirm('Are you sure?')) {
       return; }
 
     this.objectionService.deleteObjection(objection)
-      .subscribe(response =>
-        this.redirectTo('dashboard'));
+      .subscribe(response => {} );
+       setTimeout(() => {location.reload(); }, 1000);
   }
-  redirectTo(uri: string){
-    this.route.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.route.navigate([uri]));
-    }
+
 }

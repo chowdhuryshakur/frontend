@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '../service/app.service';
 import {Observable} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
 
 @Component({
@@ -24,14 +25,16 @@ export class LoginComponent implements OnInit {
   }
 
   checkLogin() {
-    (this.appservice.authenticate(this.username, this.password).subscribe(
+    this.showSpinner = true;
+    this.appservice.authenticate(this.username, this.password).subscribe(
         data => {
-          this.router.navigate(['']);
+          if (sessionStorage.getItem('role') != null)
+              this.router.navigate(['']);
           this.invalidLogin = false;
         },
         error => {
-          this.invalidLogin = true;}));
-    this.showSpinner = true;
+          this.invalidLogin = true;
+          this.showSpinner = false; });
   }
 
 
