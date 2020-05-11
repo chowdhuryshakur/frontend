@@ -9,6 +9,7 @@ import {CustomValidators} from 'ng2-validation';
 import {Venue} from '../model/venue.model';
 import {VenueService} from '../service/venue-service/venue.service';
 import {EmployeeService} from '../service/employee-service/employee.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-add-meeting',
@@ -25,16 +26,20 @@ export class AddMeetingComponent implements OnInit {
 
   venues: Venue[] = [];
   employees: Employee[] = [];
+  meetings: Meeting[] = [];
+  tempMeetings: Meeting[] = [];
   selectedEmployee: Employee;
   showSpinner = true;
   showSpinner1 = false;
+  showSuggestion = false;
   constructor(private meetingService: MeetingService,
               private toastr: ToastrService,
               private formBuilder: FormBuilder,
               private route: Router,
               private router: ActivatedRoute,
               private venueService: VenueService,
-              private employeeService: EmployeeService) {
+              private employeeService: EmployeeService,
+              public datepipe: DatePipe) {
     this.meetingId = this.router.snapshot.paramMap.get('id');
     if (this.meetingId) {
       this.meetingService.getById(this.meetingId).subscribe((m) => {
@@ -50,6 +55,9 @@ export class AddMeetingComponent implements OnInit {
     this.employeeService.getAll().subscribe(e => {
       this.employees = e;
     });
+    this.meetingService.getAll().subscribe(m => {
+      this.meetings = m;
+    });
   }
   ngOnInit() {
     this.createForm();
@@ -63,8 +71,8 @@ export class AddMeetingComponent implements OnInit {
       meetingId: [this.meeting.meetingId, Validators.required],
       venue: [ this.meeting.venue.venueId, [Validators.required ]],
       subject: [this.meeting.subject, Validators.required],
-      dateAndTime: [this.meeting.dateAndTime, Validators.required],
-      duration: [this.meeting.duration, [Validators.required, CustomValidators.number]],
+      startDateAndTime: [this.meeting.startDateAndTime, Validators.required],
+      endDateAndTime: [this.meeting.endDateAndTime, [Validators.required]],
       employees: [null]
     });
   }
@@ -90,6 +98,30 @@ export class AddMeetingComponent implements OnInit {
           this.form.reset();
           this.showSaveNotification('top', 'right');
           this.route.navigate(['/meetings']);}); }
+  }
+  // show suggestions for venues and meetings.
+  showSuggestions(inputMeeting: Meeting): any {
+    this.showSuggestion = true;
+    let start: Date = new Date(inputMeeting.startDateAndTime);
+    let end: Date = new Date(inputMeeting.endDateAndTime);
+    for (let meeting of this.meetings) {
+      let tempStart: Date = new Date(meeting.startDateAndTime);
+      let tempEnd: Date = new Date(meeting.endDateAndTime);
+      if (start > tempStart) { if (start < tempEnd) this.tempMeetings.push(meeting);}
+      else if (start < tempStart) {if (tempStart < end) this.tempMeetings.push(meeting);}
+      else if (tempStart === start) {this.tempMeetings.push(meeting);}
+    }
+    for(let venue of this.venues){
+      for(let meeting of this.tempMeetings)
+        if(meeting.venue.venueId === venue.venueId)
+          this.venues.splice(Number(this.venues.indexOf(venue)), 1);
+    }
+    for(let employee of this.employees){
+      for(let meeting of this.tempMeetings)
+        for(let employeem of meeting.employeeList)
+          if(employeem.employeeId === employee.employeeId)
+            this.employees.splice(Number(this.employees.indexOf(employee)), 1);
+    }
   }
   addEmployee(): any {
    this.selectedEmployee = this.employees.find(emp =>

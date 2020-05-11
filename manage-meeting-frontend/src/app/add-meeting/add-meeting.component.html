@@ -10,143 +10,203 @@
     </div>
   </div>
   <div class="row">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="title">Create/Edit Meeting</h5>
-      </div>
-      <div class="card-body">
-        <form name="form" [formGroup]="form">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
           <div class="row">
             <div class="col-md-5 pr-1">
-              <div class="form-group">
-                <label> Meeting Id</label>
-                <input
-                  type="text"
-                  name="meetingId"
-                  formControlName="meetingId"
-                  class="form-control"
-                  placeholder="ID">
-              </div>
-              <div class="alert alert-danger" *ngIf = "form.get('meetingId').touched && form.get('meetingId').invalid">
-                Id is required.
-              </div>
+              <h5 class="title">Create/Edit Meeting</h5>
             </div>
+              <div class="col-md-5 pr-3">
+                <button
+                  [disabled]="form.invalid || employeeList.length < 1"
+                  type="button"
+                  class="btn sbtn"
+                  (click)="createMeeting(form.value)">Save</button>
+                <mat-progress-spinner *ngIf="showSpinner1"
+                                      diameter=30
+                                      mode="indeterminate"
+                                      color="primary">
+                </mat-progress-spinner>
+              </div>
           </div>
-          <div class="row">
-            <div class="col-md-5 pr-1">
-              <div class="form-group">
-                <div>
-                  <label>Subject</label>
+        </div>
+        <div class="card-body">
+          <form name="form" [formGroup]="form">
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label> Meeting Id</label>
                   <input
                     type="text"
-                    name="subject"
-                    placeholder="subject"
+                    name="meetingId"
+                    formControlName="meetingId"
                     class="form-control"
-                    formControlName="subject">
+                    placeholder="ID">
                 </div>
-                <div class="alert alert-danger" *ngIf = "form.get('subject').touched && form.get('subject').invalid">
-                  subject is required.
+                <div class="alert alert-danger" *ngIf = "form.get('meetingId').touched && form.get('meetingId').invalid">
+                  Id is required.
+                </div>
+              </div>
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <div>
+                    <label>Subject</label>
+                    <input
+                      type="text"
+                      name="subject"
+                      placeholder="subject"
+                      class="form-control"
+                      formControlName="subject">
+                  </div>
+                  <div class="alert alert-danger" *ngIf = "form.get('subject').touched && form.get('subject').invalid">
+                    subject is required.
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 pr-1">
-              <div class="form-group">
-                <div>
-                  <label>Date and Time:
-                    <input [owlDateTime]="dt"  class="form-control"  [owlDateTimeTrigger]="dt" placeholder="Date and Time" formControlName="dateAndTime"  >
-                    <owl-date-time #dt></owl-date-time>
-                  </label>
-                </div>
-                <div class="alert alert-danger" *ngIf = "form.get('dateAndTime').touched && form.get('dateAndTime').invalid">
-                  Date and Time is required.
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <div>
+                    <label> Start Date and Time:
+                      <input [owlDateTime]="dt"  class="form-control"  [owlDateTimeTrigger]="dt" placeholder="Date and Time" formControlName="startDateAndTime"  >
+                      <owl-date-time #dt></owl-date-time>
+                    </label>
+                  </div>
+                  <div class="alert alert-danger" *ngIf = "form.get('startDateAndTime').touched && form.get('startDateAndTime').invalid">
+                    This is required.
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 pr-1">
-              <div class="form-group">
-                <div>
-                  <label>Duration</label>
-                  <input
-                    type="text"
-                    name="duration"
-                    placeholder="duration"
-                    class="form-control"
-                    formControlName="duration">
-                </div>
-                <div class="alert alert-danger" *ngIf = "form.get('duration').touched && form.get('duration').invalid">
-                  Duration is invalid.
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <div>
+                    <label>End Date and Time:
+                      <input [owlDateTime]="dt1"  class="form-control"  [owlDateTimeTrigger]="dt1" placeholder="Date and Time" formControlName="endDateAndTime"  >
+                      <owl-date-time #dt1></owl-date-time>
+                    </label>
+                  </div>
+                  <div class="alert alert-danger" *ngIf = "form.get('endDateAndTime').touched && form.get('endDateAndTime').invalid">
+                    This is required.
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 pr-1">
-              <div class="form-group" >
-                <label>Venue Name</label>
-                <select  class="form-control" [value]="meeting.venue.venueId" name="venue" formControlName="venue">
-                  <option value="">Venue Name</option>
-                  <option *ngFor="let v of venues" >
-                    {{v.venueId}}
-                  </option>
-                </select>
-              </div>
-              <div class="alert alert-danger" *ngIf = "form.get('venue').touched && form.get('venue').invalid">
-                Venue is required.
-              </div>
+
+            <div class="col-md-8">
+                <button
+                  [disabled]="form.get('meetingId').invalid || form.get('subject').invalid ||form.get('startDateAndTime').invalid || form.get('endDateAndTime').invalid"
+                  type="button"
+                  class="btn s1btn"
+                  (click)="showSuggestions(form.value)">Show Suggestions for venues and employees</button>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 pr-1">
-              <div class="form-group">
-                <div>
-                  <label>Employees</label>
-                  <select  class="form-control"  name="employees" formControlName="employees">
-                    <option value="">Employee Name</option>
-                    <option *ngFor="let e of employees">
-                      {{e.name}}
+
+            <div class="row">
+              <div class="col-md-5 pr-1" *ngIf="showSuggestion || meetingId">
+                <div class="form-group" >
+                  <label>Select a Venue</label>
+                  <select  class="form-control" [value]="meeting.venue.venueId" name="venue" formControlName="venue">
+                    <option value="">Venue Name</option>
+                    <option *ngFor="let v of venues" >
+                      {{v.venueId}}
                     </option>
                   </select>
-                  <button (click)="addEmployee()" class="btn ssbtn">Add</button>
                 </div>
-                <div class="alert alert-danger" *ngIf = "employeeList.length == 0 && form.get('employees').touched">
-                  This field is required.
+                <div class="alert alert-danger" *ngIf = "form.get('venue').touched && form.get('venue').invalid">
+                  Venue is required.
                 </div>
-                <table class="table table-hover" *ngIf="employeeList.length > 0">
-                  <thead>
-                  <tr>
-                    <th scope="col" >Added Facility</th>
-                  </tr>
-                  </thead>
+              </div>
+              <div class="col-md-5 pr-1" *ngIf="showSuggestion || meetingId">
+                <div class="form-group">
+                  <div>
+                    <label>Add some Employees</label>
+                    <select  class="form-control"  name="employees" formControlName="employees">
+                      <option value="">Employee Name</option>
+                      <option *ngFor="let e of employees">
+                        {{e.name}}
+                      </option>
+                    </select>
+                    <div class="row">
+                      <button (click)="addEmployee()" class="btn ssbtn">Add</button>
+                    </div>
+                  </div>
+                  <div class="alert alert-danger" *ngIf = "employeeList.length == 0 && form.get('employees').touched">
+                    This field is required.
+                  </div>
+                  <table class="table table-hover" *ngIf="employeeList.length > 0">
+                    <thead>
+                    <tr>
+                      <th scope="col" >Added Employess</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let e of employeeList; let i = index;">
+                      <td scope="row">{{e.name}}</td>
+                      <td><a  (click)="removeEmployeeList(i)" class="a"><mat-icon>delete_outline</mat-icon></a></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4" >
+      <div class="row" *ngIf="showSuggestion">
+          <div class="card">
+            <div class="card-header">
+              <p>Available Venues</p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                 <!-- <thead class=" text-primary">
+
+                  <th>Employee Name</th>
+                  <th>Meeting ID</th>
+                  <th >Objection</th>
+                  <th class="text-right"></th>
+
+                  </thead>-->
                   <tbody>
-                  <tr *ngFor="let e of employeeList; let i = index;">
-                    <td scope="row">{{e.name}}</td>
-                    <td><a  (click)="removeEmployeeList(i)" class="a"><mat-icon>delete_outline</mat-icon></a></td>
+                  <tr *ngFor="let venue of venues">
+                    <td>{{venue.venueId}}</td>
                   </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-                <div class="row">
-                  <div class="col-md-5 pr-1">
-                    <button
-                      [disabled]="form.invalid || employeeList.length < 1"
-                      type="button"
-                      class="btn sbtn"
-                      (click)="createMeeting(form.value)">Save</button>
-                    <mat-progress-spinner *ngIf="showSpinner1"
-                                          diameter=30
-                                          mode="indeterminate"
-                                          color="primary">
-                    </mat-progress-spinner>
-                  </div>
-             </div>
-        </form>
-      </div>
+        </div>
+        <div class="row" *ngIf="showSuggestion">
+          <div class="card">
+            <div class="card-header">
+              <p>Available Employees</p>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <!-- <thead class=" text-primary">
+
+                   <th>Employee Name</th>
+                   <th>Meeting ID</th>
+                   <th >Objection</th>
+                   <th class="text-right"></th>
+
+                   </thead>-->
+                  <tbody>
+                  <tr *ngFor="let employee of employees">
+                    <td>{{employee.name}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
  </div>

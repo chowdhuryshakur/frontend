@@ -64,18 +64,15 @@ export class VenueListComponent implements OnInit, OnDestroy {
   }
 
   deleteVenue(venue: Venue) {
+    this.showSpinner = true;
     if (!confirm('Are you sure?')) {
       return; }
-
+    this.showDeleteNotification('top', 'right');
     this.venueService.deleteVenue(venue)
-      .subscribe(response => {
-        this.redirectTo('/venue-list');
-        this.showDeleteNotification('top', 'right');});
+      .subscribe(response => { });
+    setTimeout(() => {location.reload(); }, 1500);
   }
-  redirectTo(uri: string){
-    this.route.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.route.navigate([uri]));
-  }
+
   showDeleteNotification(from, align) {
     this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span> successfully deleted.', '', {
       timeOut: 5000,

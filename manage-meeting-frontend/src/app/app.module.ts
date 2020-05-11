@@ -19,6 +19,7 @@ import {CustomFormsModule} from 'ng2-validation';
 import {DataTableModule} from 'angular7-data-table';
 import {MatIconModule, MatProgressSpinnerModule} from '@angular/material';
 import {Gaurd2Service} from './service/gaurd2-service/gaurd2.service';
+import {DatePipe} from '@angular/common';
 
 
 
@@ -56,7 +57,7 @@ import {Gaurd2Service} from './service/gaurd2-service/gaurd2.service';
     AdminLayoutComponent,
     LogoutComponent,
   ],
-  providers: [VenueService],
+  providers: [VenueService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

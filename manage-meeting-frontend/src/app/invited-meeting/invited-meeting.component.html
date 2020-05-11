@@ -33,13 +33,15 @@
                 <data-table-column [property]="'subject'" [header]="'Subject'" [sortable]="true" [resizable]="true">
 
                 </data-table-column>
-                <data-table-column [property]="'dateAndTime:'" [header]="'Date and Time'" [sortable]="true" [resizable]="true">
+                <data-table-column [property]="'startDateAndTime:'" [header]="'Start Time'" [sortable]="true" [resizable]="true">
                   <ng-template #dataTableCell let-item ="item">
-                    {{ item.dateAndTime | date:'dd/MM/yyyy @ h:mma'}}
+                    {{ item.startDateAndTime | date:'dd/MM/yyyy @ h:mma'}}
                   </ng-template>
                 </data-table-column>
-                <data-table-column [property]="'duration'" [header]="'Duration'" [sortable]="true" [resizable]="true">
-
+                <data-table-column [property]="'endDateAndTime'" [header]="'End Time'" [sortable]="true" [resizable]="true">
+                  <ng-template #dataTableCell let-item ="item">
+                    {{ item.endDateAndTime | date:'dd/MM/yyyy @ h:mma'}}
+                  </ng-template>
                 </data-table-column>
               </data-table>
             </div>

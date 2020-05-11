@@ -58,18 +58,15 @@ export class MeetingsComponent implements OnInit, OnDestroy {
   }
 
   deleteMeeting(meeting: Meeting) {
+    this.showSpinner = true;
     if (!confirm('Are you sure?')) {
       return; }
-
+    this.showDeleteNotification('top', 'right');
     this.meetingService.deleteMeeting(meeting)
-      .subscribe(response => {
-        this.redirectTo('/meetings');
-        this.showDeleteNotification('top', 'right');});
+      .subscribe(response => {});
+    setTimeout(() => {location.reload(); }, 1500);
   }
-  redirectTo(uri: string){
-    this.route.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.route.navigate([uri]));
-  }
+
   showDeleteNotification(from, align) {
     this.toastr.success('<span class="now-ui-icons ui-1_bell-53"></span> successfully deleted.', '', {
       timeOut: 5000,

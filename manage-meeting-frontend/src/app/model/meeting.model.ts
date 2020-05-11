@@ -5,8 +5,8 @@ export class Meeting {
   public meetingId: string;
   public venue: Venue;
   public subject: string;
-  public dateAndTime: Date;
-  public duration: number;
+  public startDateAndTime: Date;
+  public endDateAndTime: Date;
   public employeeList: Employee[];
 
   constructor(meeting?) {
@@ -14,7 +14,8 @@ export class Meeting {
     this.meetingId = meeting.meetingId || null;
     this.venue = meeting.venue || null;
     this.subject = meeting.subject || null;
-    this.dateAndTime = meeting.dateAndTime || null;
+    this.startDateAndTime = meeting.startDateAndTime || null;
+    this.endDateAndTime = meeting.endDateAndTime || null;
     this.employeeList = meeting.employeeList || null;
   }
 }
