@@ -41,7 +41,7 @@
     "copy-webpack-plugin": "4.6.0",
     "core-js": "2.6.3",
     "enhanced-resolve": "^4.1.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "font-awesome": "4.7.0",
     "hammerjs": "2.0.8",
     "jquery": "3.3.1",
